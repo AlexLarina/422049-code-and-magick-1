@@ -37,21 +37,29 @@ window.renderStatistics = function (ctx, names, times) {
     BAR_WIDTH: 40,
     LINE_HEIGHT: 20
   };
-
+  /**
+   * Отрисовка тени облака результатов.
+   */
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
   ctx.strokeRect(CloudParams.X + CloudParams.INDENT, CloudParams.Y + CloudParams.INDENT, CloudParams.WIDTH, CloudParams.HEIGHT);
   ctx.fillRect(CloudParams.X + CloudParams.INDENT, CloudParams.Y + CloudParams.INDENT, CloudParams.WIDTH, CloudParams.HEIGHT);
-
+  /**
+   * Отрисовка облака результатов.
+   */
   ctx.fillStyle = 'white';
   ctx.strokeRect(CloudParams.X, CloudParams.Y, CloudParams.WIDTH, CloudParams.HEIGHT);
   ctx.fillRect(CloudParams.X, CloudParams.Y, CloudParams.WIDTH, CloudParams.HEIGHT);
-
+  /**
+   * Отрисовка сообщений.
+   */
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
 
   ctx.fillText('Ура вы победили!', MessageParams.X, MessageParams.Y);
   ctx.fillText('Список результатов:', MessageParams.X, MessageParams.Y + MessageParams.INDENT);
-
+  /**
+   * Отрисовка гистограммы результатов участников.
+   */
   HistogramParams.MAX = Math.max.apply(null, times);
   var step = HistogramParams.HEIGHT / (HistogramParams.MAX - 0);
   for (var i = 0; i < times.length; i++) {
