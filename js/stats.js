@@ -1,47 +1,65 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
-  var max = -1;
-  var histogramHeight = 150;
-  var indent = 50;
-  var barWidth = 40;
-  var initialX = 120;
-  var initialY = 90;
-  var lineHeight = 20;
-  var cloudWidth = 420;
-  var cloudHeight = 270;
-  var cloudX = 100;
-  var cloudY = 10;
-  var cloudShadowIndent = 10;
-  var messageX = 120;
-  var messageY = 40;
-  var messageIndent = 20;
+  /**
+   * Параметры облака
+   * @const
+   * @type {number}
+   */
+  var CloudParams = {
+    WIDTH: 420,
+    HEIGHT: 270,
+    X: 100,
+    Y: 10,
+    INDENT: 10
+  };
+  /**
+   * Параметры текста
+   * @const
+   * @type {number}
+   */
+  var MessageParams = {
+    X: 120,
+    Y: 40,
+    INDENT: 20
+  };
+  /**
+   * Параметры гистограммы
+   * @const
+   * @type {number}
+   */
+  var HistogramParams = {
+    HEIGHT: 150,
+    INDENT: 50,
+    X: 120,
+    Y: 90,
+    MAX: -1,
+    BAR_WIDTH: 40,
+    LINE_HEIGHT: 20
+  };
+
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.strokeRect(cloudX + cloudShadowIndent, cloudY + cloudShadowIndent, cloudWidth, cloudHeight);
-  ctx.fillRect(cloudX + cloudShadowIndent, cloudY + cloudShadowIndent, cloudWidth, cloudHeight);
+  ctx.strokeRect(CloudParams.X + CloudParams.INDENT, CloudParams.Y + CloudParams.INDENT, CloudParams.WIDTH, CloudParams.HEIGHT);
+  ctx.fillRect(CloudParams.X + CloudParams.INDENT, CloudParams.Y + CloudParams.INDENT, CloudParams.WIDTH, CloudParams.HEIGHT);
 
   ctx.fillStyle = 'white';
-  ctx.strokeRect(cloudX, cloudY, cloudWidth, cloudHeight);
-  ctx.fillRect(cloudX, cloudY, cloudWidth, cloudHeight);
+  ctx.strokeRect(CloudParams.X, CloudParams.Y, CloudParams.WIDTH, CloudParams.HEIGHT);
+  ctx.fillRect(CloudParams.X, CloudParams.Y, CloudParams.WIDTH, CloudParams.HEIGHT);
 
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
 
-  ctx.fillText('Ура вы победили!', messageX, messageY);
-  ctx.fillText('Список результатов:', messageX, messageY + messageIndent);
+  ctx.fillText('Ура вы победили!', MessageParams.X, MessageParams.Y);
+  ctx.fillText('Список результатов:', MessageParams.X, MessageParams.Y + MessageParams.INDENT);
 
+  HistogramParams.MAX = Math.max.apply(null, times);
+  var step = HistogramParams.HEIGHT / (HistogramParams.MAX - 0);
   for (var i = 0; i < times.length; i++) {
-    max = times.reduce(function (a, b) {
-      return Math.max(a, b);
-    });
-  }
-  var step = histogramHeight / (max - 0);
-  for (i = 0; i < times.length; i++) {
     ctx.fillStyle = '#000';
-    ctx.fillText(Math.round(times[i]), initialX + (indent + barWidth) * i, histogramHeight + initialY - times[i] * step - lineHeight / 2);
+    ctx.fillText(Math.round(times[i]), HistogramParams.X + (HistogramParams.INDENT + HistogramParams.BAR_WIDTH) * i, HistogramParams.HEIGHT + HistogramParams.Y - times[i] * step - HistogramParams.LINE_HEIGHT / 2);
     ctx.fillStyle = (names[i] === 'Вы') ? 'red' : 'rgba(0, 0, 255, ' + Math.random() + ')';
-    ctx.fillRect(initialX + (indent + barWidth) * i, histogramHeight + initialY - times[i] * step, barWidth, times[i] * step);
+    ctx.fillRect(HistogramParams.X + (HistogramParams.INDENT + HistogramParams.BAR_WIDTH) * i, HistogramParams.HEIGHT + HistogramParams.Y - times[i] * step, HistogramParams.BAR_WIDTH, times[i] * step);
     ctx.fillStyle = '#000';
-    ctx.fillText(names[i], initialX + (indent + barWidth) * i, initialY + histogramHeight + lineHeight);
+    ctx.fillText(names[i], HistogramParams.X + (HistogramParams.INDENT + HistogramParams.BAR_WIDTH) * i, HistogramParams.Y + HistogramParams.HEIGHT + HistogramParams.LINE_HEIGHT);
   }
 };
