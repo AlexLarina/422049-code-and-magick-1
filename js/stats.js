@@ -39,7 +39,7 @@ window.renderStatistics = function (ctx, names, times) {
     MAX: -1
   };
 
-  function wrapText(ctx, text, marginLeft, marginTop, maxWidth, lineHeight) {
+  function wrapText(text, marginLeft, marginTop, maxWidth, lineHeight) {
     var words = text.split(' ');
     var countWords = words.length;
     var line = '';
@@ -57,7 +57,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillText(line, marginLeft, marginTop);
   }
 
-  function drawRect(ctx, time, columnName, index) {
+  function drawRect(time, columnName, index) {
     ctx.fillStyle = '#000';
     ctx.fillText(Math.round(time), HistogramParams.X + (HistogramParams.INDENT + HistogramParams.BAR_WIDTH) * index, HistogramParams.HEIGHT + HistogramParams.Y - time * step - HistogramParams.LINE_HEIGHT / 2);
     ctx.fillStyle = (names[index] === 'Вы') ? 'red' : 'rgba(0, 0, 255, ' + randomNumber(0.1, 1) + ')';
@@ -87,7 +87,7 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
   var message = 'Ура вы победили! Список результатов:';
-  wrapText(ctx, message, MessageParams.MARGIN_LEFT, MessageParams.MARGIN_TOP, MessageParams.MAX_WIDTH, MessageParams.LINE_HEIGHT);
+  wrapText(message, MessageParams.MARGIN_LEFT, MessageParams.MARGIN_TOP, MessageParams.MAX_WIDTH, MessageParams.LINE_HEIGHT);
 
   /**
    * Отрисовка гистограммы результатов участников.
@@ -95,6 +95,6 @@ window.renderStatistics = function (ctx, names, times) {
   HistogramParams.MAX = Math.max.apply(null, times);
   var step = HistogramParams.HEIGHT / (HistogramParams.MAX - 0);
   times.forEach(function (time, index) {
-    drawRect(ctx, time, name[index], index);
+    drawRect(time, name[index], index);
   });
 };
