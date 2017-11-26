@@ -9,22 +9,28 @@ var WizardParams = {
 };
 // функции
 
-function generateRand(range) {
+function getRandFromRange(range) {
   return Math.floor(Math.random() * range);
 }
 
+function createWizardName() {
+  return WizardParams.NAMES[getRandFromRange(WizardParams.NAMES.length)] + ' ' + WizardParams.SURNAMES[getRandFromRange(WizardParams.NAMES.length)];
+}
+
+function createWizardCoatColor() {
+  return WizardParams.COAT_COLORS[getRandFromRange(WizardParams.COAT_COLORS.length)];
+}
+
+function createWizardEyeColor() {
+  return WizardParams.EYE_COLORS[getRandFromRange(WizardParams.EYE_COLORS.length)];
+}
+
 function createWizard() {
-  var wizard = {};
-
-  var rand = generateRand(WizardParams.NAMES.length);
-  wizard.name = WizardParams.NAMES[rand] + ' ' + WizardParams.SURNAMES[rand];
-
-  rand = generateRand(WizardParams.COAT_COLORS.length);
-  wizard.coatColor = WizardParams.COAT_COLORS[rand];
-
-  rand = generateRand(WizardParams.EYE_COLORS.length);
-  wizard.eyesColor = WizardParams.EYE_COLORS[rand];
-  return wizard;
+  return {
+    name: createWizardName(),
+    coatColor: createWizardCoatColor(),
+    eyesColor: createWizardEyeColor()
+  };
 }
 
 function createWizardsArray(wizardsNumber) {
