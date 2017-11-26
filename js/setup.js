@@ -9,17 +9,20 @@ var WizardParams = {
 };
 // функции
 
+function generateRand(range) {
+  return Math.floor(Math.random() * range);
+}
+
 function createWizard() {
-  var wizard = {
-    name: '',
-    coatColor: '',
-    eyesColor: ''
-  };
-  var rand = Math.floor(Math.random() * WizardParams.NAMES.length);
+  var wizard = {};
+
+  var rand = generateRand(WizardParams.NAMES.length);
   wizard.name = WizardParams.NAMES[rand] + ' ' + WizardParams.SURNAMES[rand];
-  rand = Math.floor(Math.random() * WizardParams.COAT_COLORS.length);
+
+  rand = generateRand(WizardParams.COAT_COLORS.length);
   wizard.coatColor = WizardParams.COAT_COLORS[rand];
-  rand = Math.floor(Math.random() * WizardParams.EYE_COLORS.length);
+
+  rand = generateRand(WizardParams.EYE_COLORS.length);
   wizard.eyesColor = WizardParams.EYE_COLORS[rand];
   return wizard;
 }
@@ -42,12 +45,12 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-function createFragment() {
+function createFragment(wizards) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < WIZARDS_NUMBER; i++) {
-    fragment.appendChild(renderWizard(createWizardsArray(WIZARDS_NUMBER)[i]));
+    fragment.appendChild(renderWizard(wizards[i]));
   }
-  similarListElement.appendChild(fragment);
+  return fragment;
 }
 
 // махинации с отрисовкой
@@ -58,6 +61,7 @@ userDialog.classList.remove('hidden');
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-createFragment();
+var wizardsArray = createWizardsArray(WIZARDS_NUMBER);
 
+similarListElement.appendChild(createFragment(wizardsArray));
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
