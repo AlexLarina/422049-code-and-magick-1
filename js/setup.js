@@ -72,7 +72,7 @@ function createWizardsArray(wizardsNumber) {
 /**
  * заполнение всех полей объекта маг
  * @param {Object} wizard - объект "маг"
- * @return {Object}
+ * @return {HTMLELement}
  */
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -86,7 +86,7 @@ var renderWizard = function (wizard) {
 /**
  * заполнение всех полей объекта маг
  * @param {Array} wizards - массив магов
- * @return {Object}
+ * @return {DocumentFragment}
  */
 function createFragment(wizards) {
   var fragment = document.createDocumentFragment();
