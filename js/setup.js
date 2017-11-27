@@ -1,30 +1,55 @@
 'use strict';
-// переменные и enam
+/**
+ * количество магов
+ * @const
+ * @type {number}
+ */
 var WIZARDS_NUMBER = 4;
+/**
+ * Параметры магов
+ * @readonly
+ * @enum {number}
+ */
 var WizardParams = {
   NAMES: ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'],
   SURNAMES: ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'],
   COAT_COLORS: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
   EYE_COLORS: ['black', 'red', 'blue', 'yellow', 'green']
 };
-// функции
 
+/**
+ * генерация случайного индекса
+ * @param {number} range
+ * @return {number}
+ */
 function getRandFromRange(range) {
   return Math.floor(Math.random() * range);
 }
-
+/**
+ * заполнение поля "имя" объекта маг
+ * @return {string}
+ */
 function createWizardName() {
   return WizardParams.NAMES[getRandFromRange(WizardParams.NAMES.length)] + ' ' + WizardParams.SURNAMES[getRandFromRange(WizardParams.NAMES.length)];
 }
-
+/**
+ * заполнение поля "цвет плаща" объекта маг
+ * @return {string}
+ */
 function createWizardCoatColor() {
   return WizardParams.COAT_COLORS[getRandFromRange(WizardParams.COAT_COLORS.length)];
 }
-
+/**
+ * заполнение поля "цвет глаз" объекта маг
+ * @return {string}
+ */
 function createWizardEyeColor() {
   return WizardParams.EYE_COLORS[getRandFromRange(WizardParams.EYE_COLORS.length)];
 }
-
+/**
+ * заполнение всех полей объекта маг
+ * @return {Object}
+ */
 function createWizard() {
   return {
     name: createWizardName(),
@@ -32,7 +57,11 @@ function createWizard() {
     eyesColor: createWizardEyeColor()
   };
 }
-
+/**
+ * заполнение всех полей объекта маг
+ * @param {number} wizardsNumber - количество магов для отрисовки
+ * @return {Array}
+ */
 function createWizardsArray(wizardsNumber) {
   var wizards = [];
   for (var i = 0; i < wizardsNumber; i++) {
@@ -40,7 +69,11 @@ function createWizardsArray(wizardsNumber) {
   }
   return wizards;
 }
-
+/**
+ * заполнение всех полей объекта маг
+ * @param {Object} wizard - объект "маг"
+ * @return {Object}
+ */
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
@@ -50,7 +83,11 @@ var renderWizard = function (wizard) {
 
   return wizardElement;
 };
-
+/**
+ * заполнение всех полей объекта маг
+ * @param {Array} wizards - массив магов
+ * @return {Object}
+ */
 function createFragment(wizards) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < WIZARDS_NUMBER; i++) {
@@ -59,7 +96,9 @@ function createFragment(wizards) {
   return fragment;
 }
 
-// махинации с отрисовкой
+/**
+ * Отрисовка массива магов с использование шаблона
+ */
 
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
